@@ -4,7 +4,7 @@
     android:layout_height="match_parent" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/interstitial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,30 +14,48 @@
         android:text="Interstitial" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/videoorinterstitial"
+        android:onClick="videoorinterstitial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/interstitial"
+        android:layout_below="@+id/interstitial"
+        android:text="Video or Interstitial" />
+    
+    <Button
+        android:id="@+id/rewardedvideo"
+        android:onClick="rewardedvideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/videoorinterstitial"
+        android:layout_below="@+id/videoorinterstitial"
+        android:text="Rewarded Video" />
+    
+    <Button
+        android:id="@+id/video"
         android:onClick="video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/button1"
+        android:layout_alignRight="@+id/rewardedvideo"
+        android:layout_below="@+id/rewardedvideo"
         android:text="Video" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/banner"
         android:onClick="banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/button2"
+        android:layout_alignLeft="@+id/video"
+        android:layout_below="@+id/video"
         android:text="Banner" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/hidebanner"
         android:onClick="hidebanner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_below="@+id/button3"
+        android:layout_alignLeft="@+id/banner"
+        android:layout_below="@+id/banner"
         android:text="Hide Banner" />
 
 </RelativeLayout>

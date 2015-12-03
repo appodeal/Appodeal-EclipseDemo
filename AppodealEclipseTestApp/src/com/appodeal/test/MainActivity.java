@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.appodeal.ads.Appodeal;
 import com.appodeal.ads.BannerCallbacks;
 import com.appodeal.ads.InterstitialCallbacks;
+import com.appodeal.ads.RewardedVideoCallbacks;
 import com.appodeal.ads.VideoCallbacks;
 
 public class MainActivity extends Activity {
@@ -20,16 +21,25 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		//Appodeal.disableNetwork(this, "admob"); use this if you don't need some networks.
-		Appodeal.initialize(this, appKey);
+		Appodeal.initialize(this, appKey, Appodeal.ANY);
 		//Appodeal.setTesting(true); //use this to test your integration.
 		Appodeal.setBannerCallbacks(bannerListener);
 		Appodeal.setInterstitialCallbacks(interstitialListener);
 		Appodeal.setVideoCallbacks(videoListener);
+		Appodeal.setRewardedVideoCallbacks(rewardedVideoLister);
 		
 	}
 	
 	public void interstitial(View v){
 		Appodeal.show(this, Appodeal.INTERSTITIAL);
+	}
+	
+	public void videoorinterstitial(View v){
+		Appodeal.show(this, Appodeal.VIDEO | Appodeal.INTERSTITIAL);
+	}
+	
+	public void rewardedvideo(View v){
+		Appodeal.show(this, Appodeal.REWARDED_VIDEO);
 	}
 	
 	public void video(View v){
@@ -48,27 +58,27 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onInterstitialShown() {
-			Toast.makeText(MainActivity.this, "onInterstitialShown", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onInterstitialShown");
 		}
 		
 		@Override
 		public void onInterstitialLoaded(boolean arg0) {
-			Toast.makeText(MainActivity.this, "onInterstitialLoaded", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onInterstitialLoaded");
 		}
 		
 		@Override
 		public void onInterstitialFailedToLoad() {
-			Toast.makeText(MainActivity.this, "onInterstitialFailedToLoad", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onInterstitialFailedToLoad");
 		}
 		
 		@Override
 		public void onInterstitialClosed() {
-			Toast.makeText(MainActivity.this, "onInterstitialClosed", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onInterstitialClosed");
 		}
 		
 		@Override
 		public void onInterstitialClicked() {
-			Toast.makeText(MainActivity.this, "onInterstitialClicked", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onInterstitialClicked");
 		}
 	};
 	
@@ -76,22 +86,22 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onBannerShown() {
-			Toast.makeText(MainActivity.this, "onBannerShown", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onBannerShown");
 		}
 		
 		@Override
 		public void onBannerLoaded() {
-			Toast.makeText(MainActivity.this, "onBannerLoaded", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onBannerLoaded");
 		}
 		
 		@Override
 		public void onBannerFailedToLoad() {
-			Toast.makeText(MainActivity.this, "onBannerFailedToLoad", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onBannerFailedToLoad");
 		}
 		
 		@Override
 		public void onBannerClicked() {
-			Toast.makeText(MainActivity.this, "onBannerClicked", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onBannerClicked");
 		}
 	};
 	
@@ -99,28 +109,60 @@ public class MainActivity extends Activity {
 		
 		@Override
 		public void onVideoShown() {
-			Toast.makeText(MainActivity.this, "onVideoShown", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onVideoShown");
 		}
 		
 		@Override
 		public void onVideoLoaded() {
-			Toast.makeText(MainActivity.this, "onVideoLoaded", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onVideoLoaded");
 		}
 		
 		@Override
 		public void onVideoFinished() {
-			Toast.makeText(MainActivity.this, "onVideoFinished", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onVideoFinished");
 		}
 		
 		@Override
 		public void onVideoFailedToLoad() {
-			Toast.makeText(MainActivity.this, "onVideoFailedToLoad", Toast.LENGTH_SHORT).show();
+			//showToast(MainActivity.this, "onVideoFailedToLoad");
 		}
 		
 		@Override
 		public void onVideoClosed() {
-			Toast.makeText(MainActivity.this, "onVideoClosed", Toast.LENGTH_SHORT).show();
+			
 		}
 	};
+	
+	public RewardedVideoCallbacks rewardedVideoLister = new RewardedVideoCallbacks() {
+		
+		@Override
+		public void onRewardedVideoShown() {
+			//showToast(MainActivity.this, "onRewardedVideoShown");
+		}
+		
+		@Override
+		public void onRewardedVideoLoaded() {
+			//showToast(MainActivity.this, "onRewardedVideoLoaded");
+		}
+		
+		@Override
+		public void onRewardedVideoFinished(int amount, String name) {
+			showToast(MainActivity.this, "reward: " + amount + " " + name);
+		}
+		
+		@Override
+		public void onRewardedVideoFailedToLoad() {
+			//showToast(MainActivity.this, "onRewardedVideoFailedToLoad");
+		}
+		
+		@Override
+		public void onRewardedVideoClosed() {
+			//showToast(MainActivity.this, "onRewardedVideoClosed");
+		}
+	};
+	
+	public void showToast(Activity activity, String message) {
+		Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
+	}
 		
 }

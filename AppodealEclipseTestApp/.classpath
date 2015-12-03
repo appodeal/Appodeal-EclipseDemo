@@ -5,5 +5,12 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/android-support-v4-22.2.1.jar"/>
+	<classpathentry kind="lib" path="libs/applovin-6.1.4.jar"/>
+	<classpathentry kind="lib" path="libs/appodeal-1.13.10.jar"/>
+	<classpathentry kind="lib" path="libs/chartboost-6.0.2.jar"/>
+	<classpathentry kind="lib" path="libs/inmobi-5.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/my-target-4.1.2.jar"/>
+	<classpathentry kind="lib" path="libs/yandex-metrica-android-2.00.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
