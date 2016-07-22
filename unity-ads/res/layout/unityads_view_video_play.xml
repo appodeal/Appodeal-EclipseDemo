@@ -97,4 +97,4 @@
              android:layout_alignParentBottom="true"
              android:id="@+id/unityAdsAudioToggleView"/>
 
-</RelativeLayout><!-- From: file:/Users/jannenikula/work/unity-ads/android/sources/res/layout/unityads_view_video_play.xml -->
+</RelativeLayout><!-- From: file:/C:/Dev/Cygwin64/home/test/AppodealSDK/unity-ads-5/src/main/res/layout/unityads_view_video_play.xml -->
