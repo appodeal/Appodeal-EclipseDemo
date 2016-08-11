@@ -1,13 +1,17 @@
 package com.appodeal.test;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +26,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appodeal.ads.Appodeal;
+import com.appodeal.ads.Native;
 import com.appodeal.ads.NativeAd;
+import com.appodeal.ads.NativeAdBox;
 import com.appodeal.ads.UserSettings;
 import com.appodeal.test.layout.AdTypeViewPager;
 import com.appodeal.test.layout.HorizontalNumberPicker;
 import com.appodeal.test.layout.SlidingTabLayout;
+
+import java.util.List;
 
 
 public class MainActivity extends FragmentActivity {
@@ -137,7 +145,10 @@ public class MainActivity extends FragmentActivity {
             nativeNetworks[i] = true;
         }
 
-
+        if (Build.VERSION.SDK_INT >= 23 && (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            Appodeal.requestAndroidMPermissions(this, new AppodealPermissionCallbacks(this));
+        }
 
         TextView sdkTextView = (TextView) findViewById(R.id.sdkTextView);
         sdkTextView.setText(getString(R.string.sdkTextView, Appodeal.getVersion()));
@@ -245,6 +256,31 @@ public class MainActivity extends FragmentActivity {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             updateNativeList(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+
+                    Spinner nativeTypeSpinner = (Spinner) findViewById(R.id.native_type_list);
+                    ArrayAdapter<String> nativeTypeAdapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.nativeTypes));
+                    nativeTypeSpinner.setAdapter(nativeTypeAdapter);
+                    nativeTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
+                                case 0:
+                                    Appodeal.setNativeAdType(Native.NativeAdType.Auto);
+                                    break;
+                                case 1:
+                                    Appodeal.setNativeAdType(Native.NativeAdType.NoVideo);
+                                    break;
+                                case 2:
+                                    Appodeal.setNativeAdType(Native.NativeAdType.Video);
+                                    break;
+                            }
                         }
 
                         @Override
@@ -361,7 +397,6 @@ public class MainActivity extends FragmentActivity {
                 .setAlcohol(UserSettings.Alcohol.NEGATIVE)
                 .setSmoking(UserSettings.Smoking.NEUTRAL)
                 .setBirthday("17/06/1990") .setEmail("ru@appodeal.com")
-                .setFacebookId("1623169517896758") .setVkId("91918219")
                 .setGender(UserSettings.Gender.MALE)
                 .setRelation(UserSettings.Relation.DATING)
                 .setInterests("reading, games, movies, snowboarding")
@@ -428,7 +463,6 @@ public class MainActivity extends FragmentActivity {
         boolean isShown = Appodeal.show(this, Appodeal.INTERSTITIAL);
         Toast.makeText(this, String.valueOf(isShown), Toast.LENGTH_SHORT).show();
     }
-
 
     public void videoChooseNetworks(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -620,7 +654,7 @@ public class MainActivity extends FragmentActivity {
         Appodeal.setNativeCallbacks(new AppodealNativeCallbacks(this));
         Appodeal.initialize(this, APP_KEY, Appodeal.NATIVE);
         Appodeal.setAutoCacheNativeIcons(true);
-        Appodeal.setAutoCacheNativeImages(true);
+        Appodeal.setAutoCacheNativeMedia(true);
     }
 
     public void nativeChooseNetworks(View v) {
@@ -688,6 +722,28 @@ public class MainActivity extends FragmentActivity {
             nativeListViewAdapter.setTemplate(position);
             nativeListViewAdapter.rebuild();
         }
+    }
+
+    public void nativeLoadContainerButton(View v) {
+        NativeAdBox nativeAdBox = Appodeal.getNativeAdBox();
+        nativeAdBox.setSize(5);
+        nativeAdBox.setListener(new AppodealNativeBoxCallbacks(this));
+        nativeAdBox.load();
+    }
+
+    public void nativeShowContainerButton(View v) {
+        hideNativeAds();
+        HorizontalNumberPicker numberPicker = (HorizontalNumberPicker) findViewById(R.id.nativeAdsContainerShowPicker);
+        List<NativeAd> nativeAds = Appodeal.getNativeAdBox().getNativeAds(numberPicker.getNumber());
+
+        LinearLayout nativeAdsListView = (LinearLayout) findViewById(R.id.nativeAdsListView);
+        Spinner nativeTemplateSpinner = (Spinner) findViewById(R.id.native_template_list);
+        NativeListAdapter nativeListViewAdapter = new NativeListAdapter(nativeAdsListView, nativeTemplateSpinner.getSelectedItemPosition());
+        for (NativeAd nativeAd : nativeAds) {
+            nativeListViewAdapter.addNativeAd(nativeAd);
+        }
+        nativeAdsListView.setTag(nativeListViewAdapter);
+        nativeListViewAdapter.rebuild();
     }
 
     public static class AdTypeAdapter extends FragmentPagerAdapter {
