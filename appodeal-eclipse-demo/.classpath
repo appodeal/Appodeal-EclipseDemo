@@ -8,10 +8,18 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/applovin-6.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/appodeal-1.15.3.jar"/>
+	<classpathentry kind="lib" path="D:/work/plugins/Appodeal-EclipseDemo/appodeal-eclipse-demo/libs/appodeal-1.15.7.jar"/>
 	<classpathentry kind="lib" path="libs/chartboost-6.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/flurry-analytics-6.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/my-target-4.5.10.jar"/>
 	<classpathentry kind="lib" path="libs/android-support-v7-recyclerview-23.1.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/play-services-ads"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/play-services-ads-lite"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/play-services-base"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/play-services-basement"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/play-services-location"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/unity-ads"/>
+	<classpathentry kind="lib" path="D:/work/Android/SDK/platforms/android-23/android.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/cheetah-mobile"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

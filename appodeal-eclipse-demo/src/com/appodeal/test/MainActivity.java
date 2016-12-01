@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ import com.appodeal.ads.Native;
 import com.appodeal.ads.NativeAd;
 import com.appodeal.ads.NativeAdBox;
 import com.appodeal.ads.UserSettings;
+import com.appodeal.ads.utils.Log;
 import com.appodeal.test.layout.AdTypeViewPager;
 import com.appodeal.test.layout.HorizontalNumberPicker;
 import com.appodeal.test.layout.SlidingTabLayout;
@@ -145,8 +147,8 @@ public class MainActivity extends FragmentActivity {
             nativeNetworks[i] = true;
         }
 
-        if (Build.VERSION.SDK_INT >= 23 && (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+        if (Build.VERSION.SDK_INT >= 23 && (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+        		ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             Appodeal.requestAndroidMPermissions(this, new AppodealPermissionCallbacks(this));
         }
 
@@ -165,7 +167,10 @@ public class MainActivity extends FragmentActivity {
         loggingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                Appodeal.setLogging(isChecked);
+            	if(isChecked)
+            		Appodeal.setLogLevel(Log.LogLevel.verbose);
+            	else
+            		Appodeal.setLogLevel(Log.LogLevel.none);
             }
         });
 
